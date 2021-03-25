@@ -18,6 +18,7 @@ Sample integration with adfs
 - https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/development/native-client-with-ad-fs
 - https://github.com/Azure-Samples/active-directory-dotnet-desktop-msgraph-v2
 - https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2
+- https://github.com/microsoft/adfs-sample-msal-dotnet-native-to-webapi
 
 Customize of ADFS sign in page
 https://www.franken.pro/blog/customize-appearance-microsoft-adfs-sign-page
