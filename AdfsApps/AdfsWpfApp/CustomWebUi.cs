@@ -44,13 +44,7 @@ namespace AdfsWpfApp
                         return;
 
                     if (!wv.Source.ToString().StartsWith(_redirectUrl))
-                    {
                         return;
-                    }
-
-                    tcs.SetResult(wv.Source);
-                    w.DialogResult = true;
-                    w.Close();
 
                     var query = HttpUtility.ParseQueryString(wv.Source.Query);
                     if (query.AllKeys.Any(x => x == "code"))

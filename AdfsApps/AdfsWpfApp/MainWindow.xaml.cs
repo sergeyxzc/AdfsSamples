@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdfsWpfApp
 {
@@ -29,9 +30,14 @@ namespace AdfsWpfApp
             InitializeComponent();
 
             _adfsTokenService = new AdfsTokenService(
-                "https://<ADFS HOST>/adfs/",
-                "http://wpfclienturi/",
-                "<CLIENT GUID ID>",
+                new AdfsOptions()
+                {
+                    Authority = "https://<ADFS base host>/adfs/",
+                    ResourceUrl = "<ADFS identifire>",
+                    RedirectUrl = "<Some redirect url>",
+                    ClientId = "<Client guid>"
+                },
+                () => Dispatcher.CurrentDispatcher,
                 () => new WindowInteropHelper(this).Handle);
         }
 

@@ -9,20 +9,19 @@ namespace AdfsWpfApp
 {
     public class AdfsTokenService
     {
-        private readonly string _adfsAuthorityUrl;
-        private readonly string _redirectUrl;
-        private readonly string _clientId;
+        private readonly AdfsOptions _adfsOptions;
+        private readonly Func<Dispatcher> _getDispatcher;
         private readonly Func<IntPtr> _getParentWindowHandler;
-        private readonly string[] _scopes = new[] { "openid" };
+        private readonly string[] _scopes;
 
         private IPublicClientApplication _app;
 
-        public AdfsTokenService(string adfsAuthorityUrl, string redirectUrl, string clientId, Func<IntPtr> getParentWindowHandler)
+        public AdfsTokenService(AdfsOptions adfsOptions, Func<Dispatcher> getDispatcher, Func<IntPtr> getParentWindowHandler)
         {
-            _adfsAuthorityUrl = adfsAuthorityUrl;
-            _redirectUrl = redirectUrl;
-            _clientId = clientId;
+            _adfsOptions = adfsOptions;
+            _getDispatcher = getDispatcher;
             _getParentWindowHandler = getParentWindowHandler;
+            _scopes = new[] { $"{adfsOptions.ResourceUrl}/openid" };
         }
 
         public void Init()
@@ -30,9 +29,9 @@ namespace AdfsWpfApp
             if (_app != null)
                 return;
 
-            var builder = PublicClientApplicationBuilder.Create(_clientId)
-                .WithAdfsAuthority(_adfsAuthorityUrl, false)
-                .WithRedirectUri(_redirectUrl);
+            var builder = PublicClientApplicationBuilder.Create(_adfsOptions.ClientId)
+                .WithAdfsAuthority(_adfsOptions.Authority, false)
+                .WithRedirectUri(_adfsOptions.RedirectUrl);
 
             _app = builder.Build();
         }
@@ -52,7 +51,7 @@ namespace AdfsWpfApp
             {
                 authResult = await _app.AcquireTokenInteractive(_scopes)
                     .WithPrompt(Prompt.NoPrompt)
-                    .WithCustomWebUi(new CustomWebUi(Dispatcher.CurrentDispatcher, _redirectUrl))
+                    .WithCustomWebUi(new CustomWebUi(_getDispatcher(), _adfsOptions.RedirectUrl))
                     .WithParentActivityOrWindow(_getParentWindowHandler())
                     .ExecuteAsync();
             }
