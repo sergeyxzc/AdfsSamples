@@ -15,6 +15,7 @@ Scenario desktop acquire token
 https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=dotnet
 
 Sample integration with adfs
+- https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/development/native-client-with-ad-fs
 - https://github.com/Azure-Samples/active-directory-dotnet-desktop-msgraph-v2
 - https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2
 
