@@ -29,9 +29,9 @@ namespace AdfsWpfApp
             InitializeComponent();
 
             _adfsTokenService = new AdfsTokenService(
-                "https://adfs-next.gkbaltbet.local/adfs/",
+                "https://<ADFS HOST>/adfs/",
                 "http://wpfclienturi/",
-                "0f4c9640-adb1-47bf-a497-370caf2008fc",
+                "<CLIENT GUID ID>",
                 () => new WindowInteropHelper(this).Handle);
         }
 
